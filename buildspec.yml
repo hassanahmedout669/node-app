@@ -6,11 +6,11 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - aws --version
-      - $(aws ecr get-login --region ca-central-1 --no-include-email)
-      - REPOSITORY_URI=583791744729.dkr.ecr.ca-central-1.amazonaws.com/finrace-ecr-repo
+      - $(aws ecr get-login --region us-east-2 --no-include-email)
+      - REPOSITORY_URI=204885028048.dkr.ecr.us-east-2.amazonaws.com/nodeapp-ecr-repo
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
-     # - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_NUMBER)
-      - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
+      - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_NUMBER)
+     # - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
   build:
     commands:
       - echo Build started on `date`
@@ -22,7 +22,7 @@ phases:
       - echo Build completed on `date`
       - echo Pushing the Docker images...
       - docker push $REPOSITORY_URI:latest
-      #- docker push $REPOSITORY_URI:$IMAGE_TAG
+      - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Writing image definitions file...
       - printf '[{"name":"nodeapp","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
       - cat imagedefinitions.json 
