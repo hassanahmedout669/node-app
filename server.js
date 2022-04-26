@@ -9,7 +9,7 @@ const HOST = '0.0.0.0';
 // App
 const app = express();
 app.get('/', (req, res) => {
-  res.send('<h1 style="color:green;"> Rolling Update is working fine , Thanks you AWS !! </h1> \n');
+  res.send('<h1 style="color:green;"> Rolling Update is working fine , Thanks you AWS , Error Fixed !! </h1> \n');
 });
 
 app.listen(PORT, HOST);
